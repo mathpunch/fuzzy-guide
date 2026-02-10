@@ -680,6 +680,36 @@
         color: var(--accent);
       }
 
+      /* About:blank Button */
+      .aboutblank-btn {
+        margin-top: 30px;
+        padding: 12px 30px;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .aboutblank-btn:hover {
+        background: var(--bg-secondary);
+        border-color: var(--accent);
+        color: var(--accent);
+        box-shadow: 0 4px 12px var(--shadow-red);
+        transform: translateY(-2px);
+      }
+
+      .aboutblank-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
       /* Modal */
       .modal-overlay {
         position: fixed;
@@ -964,6 +994,27 @@
             </div>
           </div>
         </div>
+
+        <button class="aboutblank-btn" @click="openInAboutBlank()" style="align-self: center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          Open in about:blank
+        </button>
+      </div>
+
+      <!-- About:blank button - shows when browsing a page -->
+      <div style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 20;" x-show="!showNewTabUI && activeTab && activeTab.url">
+        <button class="aboutblank-btn" @click="openInAboutBlank()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          Open in about:blank
+        </button>
       </div>
     </div>
 
@@ -1175,6 +1226,49 @@
 
           goForward() {
             this.canvas.goForward()
+          },
+
+          // About:blank feature
+          openInAboutBlank() {
+            // Get URL from current page or input
+            let url = ''
+            if (this.activeTab && this.activeTab.url && this.activeTab.url !== 'about:blank') {
+              url = this.activeTab.url
+            } else if (this.currentUrlInput) {
+              url = this.currentUrlInput
+            } else {
+              return // No URL to open
+            }
+            
+            const win = window.open('about:blank', '_blank')
+            if (win) {
+              win.document.write(`
+                <!DOCTYPE html>
+                <html>
+                  <head>
+                    <title>Viewing Page</title>
+                    <style>
+                      body, html {
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+                        height: 100%;
+                        overflow: hidden;
+                      }
+                      iframe {
+                        width: 100%;
+                        height: 100%;
+                        border: none;
+                      }
+                    </style>
+                  </head>
+                  <body>
+                    <iframe src="${url}"></iframe>
+                  </body>
+                </html>
+              `)
+              win.document.close()
+            }
           },
 
           // Bookmark management
