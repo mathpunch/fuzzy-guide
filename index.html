@@ -1230,45 +1230,43 @@
 
           // About:blank feature
           openInAboutBlank() {
-            // Get URL from current page or input
-            let url = ''
-            if (this.activeTab && this.activeTab.url && this.activeTab.url !== 'about:blank') {
-              url = this.activeTab.url
-            } else if (this.currentUrlInput) {
-              url = this.currentUrlInput
-            } else {
-              return // No URL to open
-            }
+            // Get the current page URL
+            const currentUrl = window.location.href
             
-            const win = window.open('about:blank', '_blank')
-            if (win) {
-              win.document.write(`
-                <!DOCTYPE html>
-                <html>
-                  <head>
-                    <title>Viewing Page</title>
-                    <style>
-                      body, html {
-                        margin: 0;
-                        padding: 0;
-                        width: 100%;
-                        height: 100%;
-                        overflow: hidden;
-                      }
-                      iframe {
-                        width: 100%;
-                        height: 100%;
-                        border: none;
-                      }
-                    </style>
-                  </head>
-                  <body>
-                    <iframe src="${url}"></iframe>
-                  </body>
-                </html>
-              `)
-              win.document.close()
-            }
+            // Create the HTML for about:blank with iframe
+            const html = `
+              <!DOCTYPE html>
+              <html>
+                <head>
+                  <title>Zyron 2.0</title>
+                  <style>
+                    body, html {
+                      margin: 0;
+                      padding: 0;
+                      width: 100%;
+                      height: 100%;
+                      overflow: hidden;
+                    }
+                    iframe {
+                      width: 100%;
+                      height: 100%;
+                      border: none;
+                    }
+                  </style>
+                </head>
+                <body>
+                  <iframe src="${currentUrl}"></iframe>
+                </body>
+              </html>
+            `
+            
+            // Redirect current window to about:blank and write the content
+            document.open()
+            document.write(html)
+            document.close()
+            
+            // Update the URL to about:blank
+            window.history.pushState({}, '', 'about:blank')
           },
 
           // Bookmark management
