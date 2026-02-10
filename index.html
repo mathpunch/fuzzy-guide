@@ -91,6 +91,8 @@
         background-size: 40px 40px;
         pointer-events: none;
         animation: grid-glow 4s ease-in-out infinite;
+        will-change: opacity;
+        transform: translateZ(0);
       }
 
       @keyframes grid-glow {
@@ -113,14 +115,16 @@
         background: radial-gradient(circle, rgba(255, 50, 50, 0.1) 0%, transparent 70%);
         animation: rotate-shine 20s linear infinite;
         pointer-events: none;
+        will-change: transform;
+        transform: translateZ(0);
       }
 
       @keyframes rotate-shine {
         0% {
-          transform: rotate(0deg);
+          transform: rotate(0deg) translateZ(0);
         }
         100% {
-          transform: rotate(360deg);
+          transform: rotate(360deg) translateZ(0);
         }
       }
 
@@ -141,12 +145,15 @@
         border-radius: 50%;
         opacity: 0;
         animation: float-up 15s linear infinite;
+        will-change: transform, opacity;
+        transform: translateZ(0);
       }
 
       .floating-particle:nth-child(1) {
         width: 4px;
         height: 4px;
         left: 10%;
+        bottom: 0;
         animation-delay: 0s;
         animation-duration: 12s;
       }
@@ -155,6 +162,7 @@
         width: 6px;
         height: 6px;
         left: 25%;
+        bottom: 0;
         animation-delay: 2s;
         animation-duration: 14s;
       }
@@ -163,6 +171,7 @@
         width: 3px;
         height: 3px;
         left: 40%;
+        bottom: 0;
         animation-delay: 4s;
         animation-duration: 16s;
       }
@@ -171,6 +180,7 @@
         width: 5px;
         height: 5px;
         left: 55%;
+        bottom: 0;
         animation-delay: 1s;
         animation-duration: 13s;
       }
@@ -179,6 +189,7 @@
         width: 4px;
         height: 4px;
         left: 70%;
+        bottom: 0;
         animation-delay: 3s;
         animation-duration: 15s;
       }
@@ -187,6 +198,7 @@
         width: 6px;
         height: 6px;
         left: 85%;
+        bottom: 0;
         animation-delay: 5s;
         animation-duration: 17s;
       }
@@ -195,6 +207,7 @@
         width: 3px;
         height: 3px;
         left: 15%;
+        bottom: 0;
         animation-delay: 6s;
         animation-duration: 14s;
       }
@@ -203,6 +216,7 @@
         width: 5px;
         height: 5px;
         left: 60%;
+        bottom: 0;
         animation-delay: 2.5s;
         animation-duration: 12s;
       }
@@ -211,6 +225,7 @@
         width: 4px;
         height: 4px;
         left: 80%;
+        bottom: 0;
         animation-delay: 4.5s;
         animation-duration: 16s;
       }
@@ -219,13 +234,14 @@
         width: 6px;
         height: 6px;
         left: 35%;
+        bottom: 0;
         animation-delay: 1.5s;
         animation-duration: 13s;
       }
 
       @keyframes float-up {
         0% {
-          bottom: -10%;
+          transform: translate3d(0, 110vh, 0);
           opacity: 0;
         }
         10% {
@@ -238,7 +254,7 @@
           opacity: 0.2;
         }
         100% {
-          bottom: 110%;
+          transform: translate3d(0, -110vh, 0);
           opacity: 0;
         }
       }
@@ -249,15 +265,17 @@
         background: linear-gradient(90deg, transparent, var(--accent), transparent);
         opacity: 0;
         animation: sweep 10s ease-in-out infinite;
+        will-change: transform, opacity;
+        transform: translateZ(0);
       }
 
-      .line-sweep:nth-child(14) {
+      .line-sweep:nth-child(11) {
         width: 200px;
         top: 30%;
         animation-delay: 0s;
       }
 
-      .line-sweep:nth-child(15) {
+      .line-sweep:nth-child(12) {
         width: 300px;
         top: 70%;
         animation-delay: 5s;
@@ -265,14 +283,14 @@
 
       @keyframes sweep {
         0% {
-          left: -20%;
+          transform: translate3d(-120%, 0, 0);
           opacity: 0;
         }
         50% {
           opacity: 0.5;
         }
         100% {
-          left: 120%;
+          transform: translate3d(220%, 0, 0);
           opacity: 0;
         }
       }
