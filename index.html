@@ -769,9 +769,35 @@
         box-shadow: 0 0 15px var(--shadow-red);
       }
 
-      /* Loading and about:blank styles removed:
-         .loading-overlay, .spinner (only if you don't use .spinner elsewhere),
-         .aboutblank-btn */
+      /* Loading */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--bg-primary);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+      }
+
+      .spinner {
+        width: 30px;
+        height: 30px;
+        border: 3px solid rgba(255, 0, 0, 0.2);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 15px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
   <body x-data="mathApp()">
@@ -779,7 +805,11 @@
       <div class="bg-grid"></div>
     </div>
 
-    <!-- Initialization Overlay removed -->
+    <!-- Initialization Overlay -->
+    <div x-show="!ready && !error" class="loading-overlay">
+      <div class="spinner"></div>
+      <p style="font-size: 0.9rem; opacity: 0.6; font-family: 'Space Mono', monospace; color: var(--text-secondary);">Initializing Zyron 2.0...</p>
+    </div>
 
     <!-- Top Bar -->
     <div class="top-bar" x-show="ready" style="display: none">
@@ -934,11 +964,7 @@
             </div>
           </div>
         </div>
-
-        <!-- about:blank button removed here -->
       </div>
-
-      <!-- About:blank bottom button removed -->
     </div>
 
     <!-- Bookmark Modal -->
@@ -990,7 +1016,7 @@
           get showNewTabUI() {
             if (!this.activeTab) return true
             return (
-              !this.activeTab.url || this.activeTab.url.includes('/newtab.html')
+              !this.activeTab.url || this.activeTab.url === 'about:blank' || this.activeTab.url.includes('/newtab.html')
             )
           },
 
@@ -1055,7 +1081,7 @@
             this.canvas.on(ShaderCanvas.EVENTS.URL_CHANGE, (data) => {
               // Don't show newtab.html in address bar
               this.currentUrlInput =
-                data.decoded.includes('/newtab.html') ? '' : data.decoded
+                data.decoded.includes('/newtab.html') || data.decoded === 'about:blank' ? '' : data.decoded
               this.refreshTabs()
             })
 
@@ -1080,7 +1106,7 @@
             if (surface.client) {
               const rawUrl = surface.client._lastUrl || ''
               const decoded = surface.client.decode(rawUrl)
-              this.currentUrlInput = decoded
+              this.currentUrlInput = decoded === 'about:blank' ? '' : decoded
             }
           },
 
