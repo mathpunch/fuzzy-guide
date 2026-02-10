@@ -88,6 +88,205 @@
         pointer-events: none;
       }
 
+      /* Animated Background for Home Screen */
+      .animated-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .floating-particle {
+        position: absolute;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+        border-radius: 50%;
+        opacity: 0;
+        animation: float-up 15s linear infinite;
+      }
+
+      .floating-particle:nth-child(1) {
+        width: 4px;
+        height: 4px;
+        left: 10%;
+        animation-delay: 0s;
+        animation-duration: 12s;
+      }
+
+      .floating-particle:nth-child(2) {
+        width: 6px;
+        height: 6px;
+        left: 25%;
+        animation-delay: 2s;
+        animation-duration: 14s;
+      }
+
+      .floating-particle:nth-child(3) {
+        width: 3px;
+        height: 3px;
+        left: 40%;
+        animation-delay: 4s;
+        animation-duration: 16s;
+      }
+
+      .floating-particle:nth-child(4) {
+        width: 5px;
+        height: 5px;
+        left: 55%;
+        animation-delay: 1s;
+        animation-duration: 13s;
+      }
+
+      .floating-particle:nth-child(5) {
+        width: 4px;
+        height: 4px;
+        left: 70%;
+        animation-delay: 3s;
+        animation-duration: 15s;
+      }
+
+      .floating-particle:nth-child(6) {
+        width: 6px;
+        height: 6px;
+        left: 85%;
+        animation-delay: 5s;
+        animation-duration: 17s;
+      }
+
+      .floating-particle:nth-child(7) {
+        width: 3px;
+        height: 3px;
+        left: 15%;
+        animation-delay: 6s;
+        animation-duration: 14s;
+      }
+
+      .floating-particle:nth-child(8) {
+        width: 5px;
+        height: 5px;
+        left: 60%;
+        animation-delay: 2.5s;
+        animation-duration: 12s;
+      }
+
+      .floating-particle:nth-child(9) {
+        width: 4px;
+        height: 4px;
+        left: 80%;
+        animation-delay: 4.5s;
+        animation-duration: 16s;
+      }
+
+      .floating-particle:nth-child(10) {
+        width: 6px;
+        height: 6px;
+        left: 35%;
+        animation-delay: 1.5s;
+        animation-duration: 13s;
+      }
+
+      @keyframes float-up {
+        0% {
+          bottom: -10%;
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        90% {
+          opacity: 0.2;
+        }
+        100% {
+          bottom: 110%;
+          opacity: 0;
+        }
+      }
+
+      .pulse-circle {
+        position: absolute;
+        border: 2px solid var(--accent);
+        border-radius: 50%;
+        opacity: 0;
+        animation: pulse-out 8s ease-out infinite;
+      }
+
+      .pulse-circle:nth-child(11) {
+        width: 100px;
+        height: 100px;
+        top: 20%;
+        left: 20%;
+        animation-delay: 0s;
+      }
+
+      .pulse-circle:nth-child(12) {
+        width: 150px;
+        height: 150px;
+        top: 60%;
+        right: 15%;
+        animation-delay: 3s;
+      }
+
+      .pulse-circle:nth-child(13) {
+        width: 80px;
+        height: 80px;
+        bottom: 25%;
+        left: 70%;
+        animation-delay: 6s;
+      }
+
+      @keyframes pulse-out {
+        0% {
+          transform: scale(0);
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 0.3;
+        }
+        100% {
+          transform: scale(3);
+          opacity: 0;
+        }
+      }
+
+      .line-sweep {
+        position: absolute;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        opacity: 0;
+        animation: sweep 10s ease-in-out infinite;
+      }
+
+      .line-sweep:nth-child(14) {
+        width: 200px;
+        top: 30%;
+        animation-delay: 0s;
+      }
+
+      .line-sweep:nth-child(15) {
+        width: 300px;
+        top: 70%;
+        animation-delay: 5s;
+      }
+
+      @keyframes sweep {
+        0% {
+          left: -20%;
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          left: 120%;
+          opacity: 0;
+        }
+      }
+
       /* Top Bar & Navigation */
       .top-bar {
         background: rgba(10, 0, 0, 0.95);
@@ -690,18 +889,39 @@
 
       <!-- New Tab / Search View Overlay -->
       <div class="empty-state" x-show="showNewTabUI">
-        <div class="logo-group">
+        <div class="animated-bg">
+          <!-- Floating particles -->
+          <div class="floating-particle"></div>
+          <div class="floating-particle"></div>
+          <div class="floating-particle"></div>
+          <div class="floating-particle"></div>
+          <div class="floating-particle"></div>
+          <div class="floating-particle"></div>
+          <div class="floating-particle"></div>
+          <div class="floating-particle"></div>
+          <div class="floating-particle"></div>
+          <div class="floating-particle"></div>
+          <!-- Pulse circles -->
+          <div class="pulse-circle"></div>
+          <div class="pulse-circle"></div>
+          <div class="pulse-circle"></div>
+          <!-- Line sweeps -->
+          <div class="line-sweep"></div>
+          <div class="line-sweep"></div>
+        </div>
+
+        <div class="logo-group" style="position: relative; z-index: 2;">
           <div class="math-logo">Zyron</div>
           <div class="version-tag">2.0</div>
         </div>
 
-        <div class="search-container">
+        <div class="search-container" style="position: relative; z-index: 2;">
           <form @submit.prevent="navigateFromHome()">
             <input type="text" x-model="homeSearchInput" placeholder="search..." autofocus />
           </form>
         </div>
 
-        <div class="quick-apps-section">
+        <div class="quick-apps-section" style="position: relative; z-index: 2;">
           <div class="section-header">
             <h3>Quick apps</h3>
             <button
