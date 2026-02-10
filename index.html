@@ -886,7 +886,7 @@
         </button>
 
         <div class="url-bar">
-          <form @submit.prevent="navigate()" style="margin: 0">
+          <form @submit.prevent="navigate(); $event.target.querySelector('input').blur()" style="margin: 0">
             <input type="text" x-model="currentUrlInput" placeholder="Search or enter URL..." />
           </form>
           <div class="spinner-icon" x-show="isLoading"></div>
@@ -924,7 +924,7 @@
         </div>
 
         <div class="search-container" style="position: relative; z-index: 2;">
-          <form @submit.prevent="navigateFromHome()">
+          <form @submit.prevent="navigateFromHome(); $event.target.querySelector('input').blur()">
             <input type="text" x-model="homeSearchInput" placeholder="search..." autofocus />
           </form>
         </div>
